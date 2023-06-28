@@ -21,9 +21,27 @@ CREATE TABLE IF NOT EXISTS categories (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 `;
 
+const createBooksTable = `
+CREATE TABLE IF NOT EXISTS books (
+  id int NOT NULL AUTO_INCREMENT,
+  BookTitle varchar(255) DEFAULT NULL,
+  Author varchar(255) DEFAULT NULL,
+  PublicationYear int DEFAULT NULL,
+  Publisher varchar(255) DEFAULT NULL,
+  salesQuantity int DEFAULT NULL,
+  productCount int DEFAULT NULL,
+  categoryId int,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id),
+  FOREIGN KEY (categoryId) REFERENCES categories(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+`;
+
 const createTables = async () => {
   await db.execute(createCategoriesTable);
   console.log("categories tables created successfully.");
+  await db.execute(createBooksTable);
+  console.log("books tables created successfully.");
 };
 
 // 데이터베이스를 초기화 하고 위에서 정의한 createTables 함수를 호출하여 각 테이블을 생성하는 함수

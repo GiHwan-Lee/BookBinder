@@ -7,4 +7,6 @@ const router = express.Router();
 // 특별하게 구분할 필요가 없기 때문에 라우터 uri는 / 로 설정했다.
 router.get("/", bookController.getAllBookList);
 
+router.post("/", bookController.addNewBook);
+
 export default router;
