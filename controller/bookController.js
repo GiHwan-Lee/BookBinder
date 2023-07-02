@@ -1,7 +1,6 @@
 import * as bookRepository from "../data/bookModel.js";
 import * as categoryRepository from "../data/categoryModel.js";
 
-// 모든 패션 상품을 가져오는 함수
 export async function getAllBookList(req, res) {
   const data = await bookRepository.getAllBooks();
   res.status(200).json(data);
@@ -35,4 +34,32 @@ export async function addNewBook(req, res) {
   });
 
   res.status(201).json(newBook);
+}
+
+// getCategoryByName을 통해 카테고리 이름을 먼저 가져와야 한다.
+// 그 이후 만약 DB에 해당 카테고리가 있다면 if를 통해 해당 id를 전달하여 books 테이블에서 categoryId와 조인하여 해당 책들을 가져온다.
+export async function getAllByCategory(req, res) {
+  const categoryName = req.params.categoryName;
+  const category = await categoryRepository.getCategoryByName(categoryName);
+
+  if (category) {
+    const data = await bookRepository.getByCategory(category.id);
+    res.status(200).json(data);
+  } else {
+    res.status(404).send("Category not found");
+  }
+}
+
+export async function getByBookName(req, res) {
+  const bookName = req.params.name;
+  const data = await bookRepository.getByTitle(bookName);
+
+  res.status(200).json(data);
+}
+
+export async function getAllByPublisher(req, res) {
+  const publisherName = req.params.name;
+  const data = await bookRepository.getByPublisher(publisherName);
+
+  res.status(200).json(data);
 }
