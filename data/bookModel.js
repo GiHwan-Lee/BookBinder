@@ -92,3 +92,45 @@ export async function getByPublisher(publisherName) {
     books: result[0],
   };
 }
+
+export async function getTotalSalesByCategoryId(categoryId) {
+  const [rows] = await db.execute(
+    `
+    SELECT SUM(salesQuantity) as TotalSales
+    FROM books
+    WHERE categoryId = ?
+    `,
+    [categoryId]
+  );
+  return rows.length ? rows[0].TotalSales : null;
+}
+
+export async function getTotalStockByCategoryId(categoryId) {
+  const [rows] = await db.execute(
+    `
+    SELECT SUM(productCount) as totalStock 
+    FROM books 
+    WHERE CategoryId = ?
+    `,
+    [categoryId]
+  );
+
+  if (rows.length > 0) {
+    return rows[0].totalStock;
+  }
+
+  return null;
+}
+
+export async function getTopThree() {
+  const [rows] = await db.execute(
+    `
+    SELECT * 
+    FROM books 
+    ORDER BY salesQuantity DESC
+    LIMIT 3
+    `
+  );
+
+  return rows;
+}

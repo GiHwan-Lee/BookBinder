@@ -63,3 +63,46 @@ export async function getAllByPublisher(req, res) {
 
   res.status(200).json(data);
 }
+
+export async function getTotalSalesByCategory(req, res) {
+  const categoryName = req.params.categoryName;
+  const category = await categoryRepository.getCategoryByName(categoryName);
+
+  if (category === null) {
+    res.status(404).json({ error: "Category not found" });
+    return;
+  }
+
+  const totalSales = await bookRepository.getTotalSalesByCategoryId(
+    category.id
+  );
+  res.status(200).json({ totalSales });
+}
+
+export async function getTotalStockByCategory(req, res) {
+  const categoryName = req.params.categoryName;
+
+  const category = await categoryRepository.getCategoryByName(categoryName);
+
+  if (category === null) {
+    res.status(404).json({ error: "Category not found" });
+    return;
+  }
+
+  const totalStock = await bookRepository.getTotalStockByCategoryId(
+    category.id
+  );
+
+  if (totalStock === null) {
+    res.status(404).json({ error: "No books found for this category" });
+    return;
+  }
+
+  res.status(200).json({ totalStock });
+}
+
+export async function getTopBooks(req, res) {
+  const data = await bookRepository.getTopThree();
+
+  res.status(200).json(data);
+}

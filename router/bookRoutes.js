@@ -11,12 +11,21 @@ router.get("/", bookController.getAllBookList);
 router.post("/", bookController.addNewBook);
 
 // 특정 카테고리에 해당하는 모든 책들을 가져오는 엔드포인트
-router.get("/:categoryName", bookController.getAllByCategory);
+router.get("/category/:categoryName", bookController.getAllByCategory);
 
 // 특정 책 이름을 입력 했을 때 그 책에 대한 정보를 가져오는 엔드포인트
 router.get("/bookName/:name", bookController.getByBookName);
 
 // 특정 출판사에 해당하는 모든 책들을 가져오는 엔드포인트
 router.get("/publisher/:name", bookController.getAllByPublisher);
+
+// 카테고리별로 총 판매 수량을 가져오는 엔드포인트
+router.get("/sales/:categoryName", bookController.getTotalSalesByCategory);
+
+// 카테고리별로 총 재고 수량을 가져오는 엔드포인트
+router.get("/totalStock/:categoryName", bookController.getTotalStockByCategory);
+
+// 판매량 상위 3개 책을 가져오는 엔드포인트. 한 마디로 베스트 셀러 3가지.
+router.get("/bestsellers", bookController.getTopBooks);
 
 export default router;
