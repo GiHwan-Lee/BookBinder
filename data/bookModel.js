@@ -134,3 +134,42 @@ export async function getTopThree() {
 
   return rows;
 }
+
+export async function updateSalesQuantity(bookName, publicationYear, newSales) {
+  const [result] = await db.execute(
+    `
+    UPDATE books 
+    SET salesQuantity = ? 
+    WHERE BookTitle = ? AND PublicationYear = ?
+    `,
+    [newSales, bookName, publicationYear]
+  );
+
+  return result.affectedRows > 0;
+  // 실제로 하나 이상의 행이 변경되었을 때만 true가 되어 return을 하도록 만들기 위해 생성한 코드
+  // 즉 잘 수정이 되었을 때만 return이 된다.
+}
+
+export async function updateProductCount(bookName, publicationYear, newStock) {
+  const [result] = await db.execute(
+    `
+    UPDATE books 
+    SET productCount = ? 
+    WHERE BookTitle = ? AND PublicationYear = ?
+    `,
+    [newStock, bookName, publicationYear]
+  );
+
+  return result.affectedRows > 0;
+}
+
+export async function deleteBookByTitleAndYear(bookName, publicationYear) {
+  const result = await db.execute(
+    `
+    DELETE FROM books 
+    WHERE BookTitle = ? AND PublicationYear = ?
+    `,
+    [bookName, publicationYear]
+  );
+  return result[0].affectedRows > 0;
+}

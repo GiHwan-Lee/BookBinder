@@ -106,3 +106,55 @@ export async function getTopBooks(req, res) {
 
   res.status(200).json(data);
 }
+
+export async function updateSales(req, res) {
+  const bookName = req.params.bookName;
+  const publicationYear = req.params.publicationYear;
+  const newSales = req.body.salesQuantity;
+
+  const updated = await bookRepository.updateSalesQuantity(
+    bookName,
+    publicationYear,
+    newSales
+  );
+
+  if (updated) {
+    res.status(200).json({ success: "Sales updated successfully" });
+  } else {
+    res.status(500).json({ error: "Failed to update sales" });
+  }
+}
+
+export async function updateStock(req, res) {
+  const bookName = req.params.bookName;
+  const publicationYear = req.params.publicationYear;
+  const newStock = req.body.productCount;
+
+  const updated = await bookRepository.updateProductCount(
+    bookName,
+    publicationYear,
+    newStock
+  );
+
+  if (updated) {
+    res.status(200).json({ success: "Stock updated successfully" });
+  } else {
+    res.status(500).json({ error: "Failed to update stock" });
+  }
+}
+
+export async function deleteBook(req, res) {
+  const { bookName, publicationYear } = req.params;
+  const result = await bookRepository.deleteBookByTitleAndYear(
+    bookName,
+    publicationYear
+  );
+
+  if (result) {
+    res
+      .status(200)
+      .send({ success: true, message: "Book successfully deleted" });
+  } else {
+    res.status(404).send({ success: false, message: "Book not found" });
+  }
+}

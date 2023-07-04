@@ -28,4 +28,18 @@ router.get("/totalStock/:categoryName", bookController.getTotalStockByCategory);
 // 판매량 상위 3개 책을 가져오는 엔드포인트. 한 마디로 베스트 셀러 3가지.
 router.get("/bestsellers", bookController.getTopBooks);
 
+// 판매량을 수정하기 위한 엔드포인트
+router.put(
+  "/updateSales/:bookName/:publicationYear",
+  bookController.updateSales
+);
+
+// 재고 수량을 수정하기 위한 엔드포인트
+router.put(
+  "/updateStock/:bookName/:publicationYear",
+  bookController.updateStock
+);
+
+router.delete("/delete/:bookName/:publicationYear", bookController.deleteBook);
+
 export default router;
