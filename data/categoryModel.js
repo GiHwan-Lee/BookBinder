@@ -3,7 +3,7 @@ import { db } from "../db/database.js";
 
 export async function getCategoryByName(categoryName) {
   const [rows, fields] = await db.execute(
-    "SELECT * FROM categories WHERE CategoryName = ?",
+    "SELECT * FROM categories WHERE categoryName = ?",
     [categoryName]
   );
 
@@ -16,7 +16,7 @@ export async function getCategoryByName(categoryName) {
 
 export async function createCategory(categoryName) {
   const [result] = await db.execute(
-    "INSERT INTO categories (CategoryName) VALUES(?)",
+    "INSERT INTO categories (categoryName) VALUES(?)",
     [categoryName]
   );
 

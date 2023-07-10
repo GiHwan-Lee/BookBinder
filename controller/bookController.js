@@ -8,26 +8,26 @@ export async function getAllBookList(req, res) {
 
 export async function addNewBook(req, res) {
   const {
-    CategoryName,
-    BookTitle,
-    Author,
-    PublicationYear,
-    Publisher,
+    categoryName,
+    bookTitle,
+    author,
+    publicationYear,
+    publisher,
     salesQuantity,
     productCount,
   } = req.body;
 
-  let category = await categoryRepository.getCategoryByName(CategoryName);
+  let category = await categoryRepository.getCategoryByName(categoryName);
 
   if (!category) {
-    category = await categoryRepository.createCategory(CategoryName);
+    category = await categoryRepository.createCategory(categoryName);
   }
 
   const newBook = await bookRepository.createBook({
-    BookTitle,
-    Author,
-    PublicationYear,
-    Publisher,
+    bookTitle,
+    author,
+    publicationYear,
+    publisher,
     salesQuantity,
     productCount,
     categoryId: category.id,

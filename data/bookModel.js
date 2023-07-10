@@ -13,26 +13,26 @@ export async function getAllBooks() {
 
 // 새로운 책 입고시 추가하기
 export async function createBook({
-  BookTitle,
-  Author,
-  PublicationYear,
-  Publisher,
+  bookTitle,
+  author,
+  publicationYear,
+  publisher,
   salesQuantity,
   productCount,
   categoryId,
 }) {
   const sql = `
     INSERT INTO books
-      (BookTitle, Author, PublicationYear, Publisher, salesQuantity, productCount, categoryId)
+      (bookTitle, author, publicationYear, publisher, salesQuantity, productCount, categoryId)
     VALUES
       (?, ?, ?, ?, ?, ?, ?)
   `;
 
   const result = await db.execute(sql, [
-    BookTitle,
-    Author,
-    PublicationYear,
-    Publisher,
+    bookTitle,
+    author,
+    publicationYear,
+    publisher,
     salesQuantity,
     productCount,
     categoryId,

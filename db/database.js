@@ -15,7 +15,9 @@ export const db = pool.promise();
 const createCategoriesTable = `
 CREATE TABLE IF NOT EXISTS categories (
   id int NOT NULL AUTO_INCREMENT,
-  CategoryName varchar(255) DEFAULT NULL,
+  categoryName varchar(255) DEFAULT NULL,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -24,13 +26,15 @@ CREATE TABLE IF NOT EXISTS categories (
 const createBooksTable = `
 CREATE TABLE IF NOT EXISTS books (
   id int NOT NULL AUTO_INCREMENT,
-  BookTitle varchar(255) DEFAULT NULL,
-  Author varchar(255) DEFAULT NULL,
-  PublicationYear int DEFAULT NULL,
-  Publisher varchar(255) DEFAULT NULL,
+  bookTitle varchar(255) DEFAULT NULL,
+  author varchar(255) DEFAULT NULL,
+  publicationYear int DEFAULT NULL,
+  publisher varchar(255) DEFAULT NULL,
   salesQuantity int DEFAULT NULL,
   productCount int DEFAULT NULL,
   categoryId int,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id),
   FOREIGN KEY (categoryId) REFERENCES categories(id)
