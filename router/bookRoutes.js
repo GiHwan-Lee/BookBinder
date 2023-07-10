@@ -40,6 +40,7 @@ router.put(
   bookController.updateStock
 );
 
+// 특정 책의 정보를 삭제하기 위한 엔드포인트
 router.delete("/delete/:bookName/:publicationYear", bookController.deleteBook);
 
 export default router;
