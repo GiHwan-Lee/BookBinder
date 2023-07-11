@@ -71,7 +71,7 @@ export async function getByCategory(categoryId) {
 }
 
 export async function getByTitle(bookName) {
-  const result = await db.execute("SELECT * FROM books WHERE BookTitle = ?", [
+  const result = await db.execute("SELECT * FROM books WHERE bookTitle = ?", [
     bookName,
   ]);
 
@@ -80,10 +80,10 @@ export async function getByTitle(bookName) {
 
 export async function getByPublisher(publisherName) {
   const count = await db.execute(
-    "SELECT COUNT(*) as total FROM books WHERE Publisher = ?",
+    "SELECT COUNT(*) as total FROM books WHERE publisher = ?",
     [publisherName]
   );
-  const result = await db.execute("SELECT * FROM books WHERE Publisher = ?", [
+  const result = await db.execute("SELECT * FROM books WHERE publisher = ?", [
     publisherName,
   ]);
 
@@ -96,7 +96,7 @@ export async function getByPublisher(publisherName) {
 export async function getTotalSalesByCategoryId(categoryId) {
   const [rows] = await db.execute(
     `
-    SELECT SUM(salesQuantity) as TotalSales
+    SELECT SUM(salesQuantity) as totalSales
     FROM books
     WHERE categoryId = ?
     `,
@@ -110,7 +110,7 @@ export async function getTotalStockByCategoryId(categoryId) {
     `
     SELECT SUM(productCount) as totalStock 
     FROM books 
-    WHERE CategoryId = ?
+    WHERE categoryId = ?
     `,
     [categoryId]
   );
@@ -140,7 +140,7 @@ export async function updateSalesQuantity(bookName, publicationYear, newSales) {
     `
     UPDATE books 
     SET salesQuantity = ? 
-    WHERE BookTitle = ? AND PublicationYear = ?
+    WHERE bookTitle = ? AND publicationYear = ?
     `,
     [newSales, bookName, publicationYear]
   );
@@ -155,7 +155,7 @@ export async function updateProductCount(bookName, publicationYear, newStock) {
     `
     UPDATE books 
     SET productCount = ? 
-    WHERE BookTitle = ? AND PublicationYear = ?
+    WHERE bookTitle = ? AND publicationYear = ?
     `,
     [newStock, bookName, publicationYear]
   );
@@ -167,7 +167,7 @@ export async function deleteBookByTitleAndYear(bookName, publicationYear) {
   const result = await db.execute(
     `
     DELETE FROM books 
-    WHERE BookTitle = ? AND PublicationYear = ?
+    WHERE bookTitle = ? AND publicationYear = ?
     `,
     [bookName, publicationYear]
   );
