@@ -102,7 +102,7 @@ export async function getTotalSalesByCategoryId(categoryId) {
     `,
     [categoryId]
   );
-  return rows.length ? rows[0].TotalSales : null;
+  return rows.length ? rows[0].totalSales : null;
 }
 
 export async function getTotalStockByCategoryId(categoryId) {
